@@ -1,26 +1,59 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import Header from './Header';
+import Section from './Section';
+import Footer from './Footer';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: [],
+      tasks: [],
+    };
+  }
+
+  handleSubmit = (event) => {
+    this.setState((prev) => {
+       return {
+         tasks: [...prev.tasks, this.state.value],
+        value: [null]
+      }
+    })
+    event.preventDefault();
+    console.log(this.state.tasks)
+
+  }
+
+  handleChange = (event) => {
+      this.setState({
+        value: event.target.value
+      })
+  }
+
+  render() {
+    return (
+      <div className="todoapp">
+
+        <Header 
+          handleChange={this.handleChange}
+          handleSubmit={this.handleSubmit}
+          value={this.state.value}
+        />
+
+        <Section 
+          tasks={this.state.tasks}
+          handleChecked = {this.handleChecked}
+        />
+
+        <Footer 
+          tasks={this.state.tasks} 
+        />
+    
+
+      </div>
+    );
+  }
 }
 
 export default App;
