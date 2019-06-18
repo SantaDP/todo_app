@@ -12,16 +12,23 @@ class Section extends React.Component {
 				<label htmlFor="toggle-all">Mark all as complete</label>
 				<ul className="todo-list">
           {
-            this.props.tasks.map((task) => (
-            <li className="">
+            this.props.tasks.map((task, i) => (
+            <li key={task+i} className="">
               <div className="view">
                 <input 
                   className="toggle" 
                   type="checkbox" 
-                  onClick={(event)=>event.target.parentElement.parentElement.classList.toggle('completed')} 
+                  onClick={(event)=>{
+                    event.target.parentElement.parentElement.classList.toggle('completed');
+                    }} 
                 />
                 <label>{task}</label>
-                <button className="destroy"></button>
+                <button 
+                className="destroy"
+                onClick={()=>this.props.handleRemoveTask(i)}
+                
+                >
+                </button>
               </div>
             </li>
           ))

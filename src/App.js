@@ -8,20 +8,29 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      value: [],
+      value: '',
       tasks: [],
     };
+  }
+  handleRemoveTask = (index) => {
+    this.setState((prev)=>{
+      const copyTasks = [...prev.tasks];
+      copyTasks.splice(index, 1);
+      return {
+        tasks: copyTasks,
+      }
+    })
   }
 
   handleSubmit = (event) => {
     this.setState((prev) => {
-       return {
-         tasks: [...prev.tasks, this.state.value],
-        value: [null]
-      }
+      return {
+        tasks: [...prev.tasks, this.state.value],
+        value: [null]}
     })
     event.preventDefault();
     console.log(this.state.tasks)
+    console.log(this.state.value)
 
   }
 
@@ -44,6 +53,7 @@ class App extends React.Component {
         <Section 
           tasks={this.state.tasks}
           handleChecked = {this.handleChecked}
+          handleRemoveTask = {this.handleRemoveTask}
         />
 
         <Footer 
