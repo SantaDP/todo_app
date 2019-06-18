@@ -12,6 +12,16 @@ class App extends React.Component {
       tasks: [],
     };
   }
+  handleRemoveAllTasks = () => {
+    this.setState (()=> {
+      let copyTasks = [...this.state.tasks]
+      copyTasks = [];
+      return {
+        tasks: copyTasks
+      }
+    })
+  }
+
   handleRemoveTask = (index) => {
     this.setState((prev)=>{
       const copyTasks = [...prev.tasks];
@@ -26,7 +36,8 @@ class App extends React.Component {
     this.setState((prev) => {
       return {
         tasks: [...prev.tasks, this.state.value],
-        value: [null]}
+        value: [null]
+      }
     })
     event.preventDefault();
     console.log(this.state.tasks)
@@ -58,6 +69,7 @@ class App extends React.Component {
 
         <Footer 
           tasks={this.state.tasks} 
+          handleRemoveAllTasks = {this.handleRemoveAllTasks}
         />
     
 

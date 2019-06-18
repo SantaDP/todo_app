@@ -3,6 +3,7 @@ import React from 'react';
 class Section extends React.Component {
   constructor(props) {
     super(props);
+   
   }
   render() {
 
@@ -26,7 +27,6 @@ class Section extends React.Component {
                 <button 
                 className="destroy"
                 onClick={()=>this.props.handleRemoveTask(i)}
-                
                 >
                 </button>
               </div>

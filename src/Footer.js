@@ -19,7 +19,11 @@ class Footer extends React.Component {
 						<a href="#/completed">Completed</a>
 					</li>
 				</ul>
-				<button className="clear-completed" style={{display: "block"}}>Clear completed</button>
+				<button 
+        className="clear-completed" 
+        style={{display: "block"}}
+        onClick={()=>this.props.handleRemoveAllTasks()}
+        >Clear completed</button>
 			</footer>
     )
   }
