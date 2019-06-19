@@ -40,9 +40,6 @@ class App extends React.Component {
       }
     })
     event.preventDefault();
-    console.log(this.state.tasks)
-    console.log(this.state.value)
-
   }
 
   handleChange = (event) => {
