@@ -12,6 +12,19 @@ class App extends React.Component {
       tasks: [],
     };
   }
+  handleChangeStatus = (index) => {
+    const copyTasks = [...this.state.tasks]
+    copyTasks[index] = {
+      ...copyTasks[index],
+      status: !copyTasks[index].status
+    }
+    this.setState(() => {
+      return {
+        tasks: copyTasks
+      }
+    })
+  }
+
   handleRemoveAllTasks = () => {
     this.setState (()=> {
       let copyTasks = [...this.state.tasks]
@@ -33,18 +46,30 @@ class App extends React.Component {
   }
 
   handleSubmit = (event) => {
-    this.setState((prev) => {
-      return {
-        tasks: [...prev.tasks, this.state.value],
-        value: [null]
-      }
-    })
     event.preventDefault();
-  }
+    this.setState((prev) => {
+       if(prev.value.length > 0){
+      return {
+        tasks: [
+          {
+            text: prev.value,
+            status: false,
+          },
+          ...prev.tasks
+        ],
+        value: '',
+      }} else {
+        return
+      }
+    });
+  };
 
   handleChange = (event) => {
-      this.setState({
-        value: event.target.value
+    const targetValue = event.target.value;
+      this.setState((prev)=>{
+        return {
+        value: targetValue,
+        } 
       })
   }
 
@@ -62,6 +87,9 @@ class App extends React.Component {
           tasks={this.state.tasks}
           handleChecked = {this.handleChecked}
           handleRemoveTask = {this.handleRemoveTask}
+          handleEditStatus = {this.handleEditStatus}
+          handleChange={this.handleChange}
+          handleChangeStatus={this.handleChangeStatus}
         />
 
         <Footer 

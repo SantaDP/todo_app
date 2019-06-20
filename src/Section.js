@@ -19,24 +19,24 @@ class Section extends React.Component {
 				<ul className="todo-list">
           {
             this.props.tasks.map((task, i) => (
-            <li key={task+i} className="">
+              (task.text.length > 0) ?
+            <li  className={task.status ? 'completed' : 'active'}>
               <div className="view">
                 <input 
+                  checked={task.status}
+                  onChange={() => this.props.handleChangeStatus(i)}
                   className="toggle" 
-                  type="checkbox" 
-                  onClick={(event)=>{
-                    event.target.parentElement.parentElement.classList.toggle('completed');
-                    }} 
+                  type="checkbox"  
                 />
-                <label>{task}</label>
+                <label>{task.text}</label>
                 <button 
                 className="destroy"
                 onClick={()=>this.props.handleRemoveTask(i)}
                 >
                 </button>
               </div>
-            </li>
-          ))
+            </li> : null
+          )) 
           }
           </ul>
 			</section>
