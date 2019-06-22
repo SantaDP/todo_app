@@ -333,6 +333,7 @@ body {
 	border: none; /* Mobile Safari */
 	-webkit-appearance: none;
 	appearance: none;
+	cursor: pointer;
 }
 
 .todo-list li .toggle {
@@ -379,6 +380,7 @@ body {
 	color: #cc9a9a;
 	margin-bottom: 11px;
 	transition: color 0.2s ease-out;
+	cursor: pointer;
 }
 
 .todo-list li .destroy:hover {

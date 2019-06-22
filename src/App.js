@@ -10,8 +10,45 @@ class App extends React.Component {
     this.state = {
       value: '',
       tasks: [],
+      allTasks:[],
     };
   }
+
+  handleShowActiveTasks = () => {
+    const copyTasks = [...this.state.allTasks]
+    const activeTasks = copyTasks.filter(active => 
+      (!active.status)
+      )
+      this.setState(()=> {
+        return {
+          tasks: activeTasks,
+      }
+    })
+  }
+
+  handleShowComplitedTasks = () => {
+    const copyTasks = [...this.state.allTasks]
+    const complitedTasks = copyTasks.filter(active => 
+      (active.status)
+     )
+     this.setState(()=> {
+      return {
+        tasks: complitedTasks,
+        
+      }
+    })
+  }
+
+  handleShowAllTasks = () => {
+    const allTasks = [...this.state.allTasks]
+     this.setState(()=> {
+      return {
+        tasks: allTasks,
+        
+      }
+    })
+  }
+
   handleChangeStatus = (index) => {
     const copyTasks = [...this.state.tasks]
     copyTasks[index] = {
@@ -20,7 +57,8 @@ class App extends React.Component {
     }
     this.setState(() => {
       return {
-        tasks: copyTasks
+        tasks: copyTasks,
+        allTasks: copyTasks,
       }
     })
   }
@@ -28,7 +66,11 @@ class App extends React.Component {
   handleRemoveAllTasks = () => {
     this.setState (()=> {
       let copyTasks = [...this.state.tasks]
-      copyTasks = [];
+      copyTasks.map((item, i) => {
+       if(item.status) {
+        copyTasks.splice(i,1);
+       } 
+      })
       return {
         tasks: copyTasks
       }
@@ -41,12 +83,14 @@ class App extends React.Component {
       copyTasks.splice(index, 1);
       return {
         tasks: copyTasks,
+        allTasks: copyTasks,
       }
     })
   }
 
   handleSubmit = (event) => {
     event.preventDefault();
+    
     this.setState((prev) => {
        if(prev.value.length > 0){
       return {
@@ -54,8 +98,18 @@ class App extends React.Component {
           {
             text: prev.value,
             status: false,
+            id: Date.now(),
           },
           ...prev.tasks
+        ],
+        allTasks: [
+          {
+            text: prev.value,
+            status: false,
+            id: Date.now(),
+            display: 'block',
+          },
+          ...prev.allTasks
         ],
         value: '',
       }} else {
@@ -66,6 +120,7 @@ class App extends React.Component {
 
   handleChange = (event) => {
     const targetValue = event.target.value;
+    console.log(this.state.tasks)
       this.setState((prev)=>{
         return {
         value: targetValue,
@@ -91,11 +146,15 @@ class App extends React.Component {
           handleChange={this.handleChange}
           handleChangeStatus={this.handleChangeStatus}
         />
-
-        <Footer 
+        {this.state.tasks.length > 0 ?
+        (<Footer 
           tasks={this.state.tasks} 
           handleRemoveAllTasks = {this.handleRemoveAllTasks}
-        />
+          handleShowActiveTasks = {this.handleShowActiveTasks}
+          handleShowComplitedTasks = {this.handleShowComplitedTasks}
+          handleShowAllTasks = {this.handleShowAllTasks}
+        />) : null
+        }
     
 
       </div>

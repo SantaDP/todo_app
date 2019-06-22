@@ -20,7 +20,11 @@ class Section extends React.Component {
           {
             this.props.tasks.map((task, i) => (
               (task.text.length > 0) ?
-            <li  className={task.status ? 'completed' : 'active'}>
+            <li  
+              key={task.id} 
+              className={task.status ? 'completed' : 'active'}
+              style={{display:task.display}}
+            >
               <div className="view">
                 <input 
                   checked={task.status}
