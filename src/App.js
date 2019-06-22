@@ -20,8 +20,11 @@ class App extends React.Component {
       (!active.status)
       )
       this.setState(()=> {
+        if (activeTasks.length > 0){
         return {
           tasks: activeTasks,
+      }} else { 
+        return 
       }
     })
   }
@@ -32,9 +35,12 @@ class App extends React.Component {
       (active.status)
      )
      this.setState(()=> {
+      if (complitedTasks.length > 0){
       return {
         tasks: complitedTasks,
         
+      }} else {
+        return
       }
     })
   }
@@ -63,27 +69,14 @@ class App extends React.Component {
     })
   }
 
-  handleRemoveAllTasks = () => {
-    this.setState (()=> {
-      let copyTasks = [...this.state.tasks]
-      copyTasks.map((item, i) => {
-       if(item.status) {
-        copyTasks.splice(i,1);
-       } 
-      })
-      return {
-        tasks: copyTasks
-      }
-    })
-  }
-
+ 
   handleRemoveTask = (index) => {
     this.setState((prev)=>{
       const copyTasks = [...prev.tasks];
       copyTasks.splice(index, 1);
       return {
         tasks: copyTasks,
-        allTasks: copyTasks,
+      
       }
     })
   }

@@ -10,13 +10,13 @@ class Footer extends React.Component {
 				<span className="todo-count"><strong>{this.props.tasks.length}</strong> items left</span>
 				<ul className="filters">
 					<li>
-						<a href="#/" className="selected" onClick={()=>this.props.handleShowAllTasks()}>All</a>
+						<a href="#/" className="selected" >All</a>
 					</li>
 					<li>
-						<a href="#/active" onClick={()=>this.props.handleShowActiveTasks()}>Active</a>
+						<a href="#/active" >Active</a>
 					</li>
 					<li>
-						<a href="#/completed" onClick={()=>this.props.handleShowComplitedTasks()}>Completed</a>
+						<a href="#/completed" >Completed</a>
 					</li>
 				</ul>
 				<button 
