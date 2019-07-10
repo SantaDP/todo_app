@@ -1,15 +1,11 @@
 import React from 'react';
 
-class Header extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-  render(){
+const Header =({handleSubmit, value, handleChange}) => {
     return (
       <header className="header">
 				<h1>todos</h1>
         <form
-        onSubmit={this.props.handleSubmit}
+        onSubmit={handleSubmit}
         >
           <label>
             <input 
@@ -17,15 +13,13 @@ class Header extends React.Component {
             className="new-todo"
             type="text" 
             name="name" 
-            value={this.props.value}
-            onChange={this.props.handleChange}
+            value={value}
+            onChange={handleChange}
             />
           </label> 
         </form>
-			
 			</header>
     )
   }
-}
 
 export default Header;
