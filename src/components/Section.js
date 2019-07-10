@@ -1,11 +1,7 @@
 import React from 'react';
 import TodoItem from './TodoItem';
 
-const Section = ({ 
-  handleChangeStatus, 
-  handleRemoveTask, 
-  tasks,  
-}) => {
+const Section = ({ handleChangeStatus, handleRemoveTask, tasks }) => {
     return (
       <section className="main" >
 				<input 
@@ -19,14 +15,14 @@ const Section = ({
           {
             tasks.map((task, i) => (
               (task.text.length > 0) ?
-              <TodoItem 
-                key={task.id}
-                task={task}
-                handleChangeStatus={handleChangeStatus}
-                handleRemoveTask = {handleRemoveTask}
-                index={i}
+                <TodoItem 
+                  key={task.id}
+                  task={task}
+                  handleChangeStatus={handleChangeStatus}
+                  handleRemoveTask = {handleRemoveTask}
+                  index={i}
                 />
-             : null
+            : null
           )) 
           }
         </ul>
