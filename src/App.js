@@ -2,7 +2,12 @@ import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Section from './components/Section';
-import Footer from './components/Footer';
+import Footer, {
+  FILTER_ORDER_ALL,
+  FILTER_ORDER_ACTIVE,
+  FILTER_ORDER_COMPLETED
+}
+ from './components/Footer';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,21 +16,25 @@ class App extends React.Component {
       value: '',
       tasks: [],
       visibilityTasks: [],
+      filterField: '',
     };
   }
-  
-  handleFilterTasks = (status) => {
-    this.setState ( prev => {
-      const copyTasks = prev.tasks;      
-      let showTasks = [];
-      status === 'active' ?
-      showTasks = copyTasks.filter(task => !task.status) :
-      status === 'completed' ? 
-      showTasks = copyTasks.filter(task => task.status) :
-      showTasks = copyTasks;
 
+  filterTasks(tasks, filterField) {
+    const callbackMap = {
+      [FILTER_ORDER_ACTIVE]: task => !task.status,
+      [FILTER_ORDER_COMPLETED]: task => task.status,
+      [FILTER_ORDER_ALL]: task => task,
+    }
+    const callback = callbackMap[filterField] || callbackMap[FILTER_ORDER_ALL]
+    return [...tasks].filter(callback)
+  }
+  
+  handleFilterTasks = (filterField) => {
+    this.setState ( prev => {
       return {
-        visibilityTasks: showTasks,
+        filterField,
+        visibilityTasks: this.filterTasks(prev.tasks, filterField),
       }
     })
   }
@@ -46,10 +55,10 @@ class App extends React.Component {
 
   handleRemoveTask = (id) => {
     this.setState((prev)=>{
-      const copyTasks = prev.tasks.filter(todo => todo.id !== id);
+      const copyTasks = prev.tasks;
       return {
-        tasks: copyTasks,
-        visibilityTasks: copyTasks,    
+        tasks: copyTasks.filter(todo => todo.id !== id),  
+        visibilityTasks: copyTasks.filter(todo => todo.id !== id),
       }
     })
    
@@ -95,27 +104,28 @@ class App extends React.Component {
   }
 
   render() {
+    const {visibilityTasks, tasks, value, filterField} = this.state;
     return (
       <div className="todoapp">
         <Header 
           handleChange={this.handleChange}
           handleSubmit={this.handleSubmit}
-          value={this.state.value}
+          value={value}
         />
 
         <Section 
-          tasks={this.state.visibilityTasks}
+          tasks={visibilityTasks}
           handleChecked = {this.handleChecked}
           handleRemoveTask = {this.handleRemoveTask}
           handleChange={this.handleChange}
           handleChangeStatus={this.handleChangeStatus}
-          visibilityTasks={this.state.visibilityTasks}
         />
         
         <Footer 
-          tasks={this.state.tasks} 
+          tasks={tasks} 
           filterTasks={this.handleFilterTasks}
           removeAllTasks={this.handleRemoveAlltak}
+          filterField={filterField}
         />
       </div>
     );
